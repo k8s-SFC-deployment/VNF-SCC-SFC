@@ -1,8 +1,8 @@
-# VNF Simulating container considering SFC
+# VNF-SCC-SFC
 
-VNF container with HTTP.
+VNF Simulating Container Considering SFC with HTTP
 
-This project implement VNF simulator for stressing environment.
+This project implement VNF simulator for stressing environment with `stress-ng`.
 And each VNF can call another VNF with message.
 
 First, user send message (that has recursive format).
@@ -31,6 +31,6 @@ If you want show detail, go below and past [`/asstes/openapi.json`](/assets/open
 ### Run
 
 ```bash
-$ docker build -t sfc-simulator -f ./Dockerfile.prod # Dockerfile.dev only has an additional --reload tag when run.
+$ docker build -t sfc-simulator -f ./Dockerfile.prod . # Dockerfile.dev only has an additional --reload tag when run.
 $ docker run -it --rm --cpus 1 -p 7000:7000 sfc-simulator
 ```

@@ -35,7 +35,7 @@ master@user:~/vnf-scc-sfc/k8s$ kubectl apply -f ids
 ### 3. Deploy Ingress-Nginx
 
 ```bash
-master@user:~/vnf-scc-sfc/k8s$ kubectl apply -f externals/nginx-ingress-baremetal-deploy.yaml
+master@user:~/vnf-scc-sfc/k8s$ kubectl apply -f externals/ingress-nginx-baremetal-deploy.yaml
 ```
 
 And, replace [`/k8s/ingress`](/k8s/ingress.yaml) `<Please Replace>` with domain.
@@ -62,3 +62,7 @@ master@user:~/vnf-scc-sfc/k8s$ kubectl get ing -n testbed
 master@user:~/vnf-scc-sfc/k8s$ curl http://<host>:<http-port>/ids/openapi.json
 master@user:~/vnf-scc-sfc/k8s$ curl http://<host>:<http-port>/firewall/openapi.json
 ```
+
+## Externals
+
+- `ingress-nginx`

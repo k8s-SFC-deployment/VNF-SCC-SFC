@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  namespace: testbed
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: <Please Replace>
+    http:
+      paths:
+      - path: /firewall
+        pathType: Prefix
+        backend:
+          service:
+            name: firewall-vnf
+            port:
+              number: 80
+      - path: /ids
+        pathType: Prefix
+        backend:
+          service:
+            name: ids-vnf
+            port:
+              number: 80

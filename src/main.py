@@ -1,5 +1,6 @@
 import json
 
+import os
 import requests
 from fastapi import FastAPI, File, UploadFile, Depends, BackgroundTasks
 
@@ -8,8 +9,7 @@ from src.utils.stress import stress
 from src.utils.parsing import load_json_one_depth_v2
 from src.model import SetupPostLoadRequest, LoadPostRequest, Next, ProcessingLoad, TransmittingLoad
 
-
-app = FastAPI()
+app = FastAPI(title="VNF-SCC-SFC", root_path=os.getenv("ROOT_PATH", default=None))
 
 
 def request_next(target_url, files, data):

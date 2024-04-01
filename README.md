@@ -16,7 +16,7 @@ And then, VNF consume outer message and resend inner message to another VNF unti
   - [x] CPU
   - [x] Memory
   - [x] Bandwidth
-
+- [ ] setting up configuration when container start
 
 ## APIS
 

@@ -3,6 +3,11 @@
 - [x] test k8s deployment
 - [ ] organize with helm
 - [ ] apply hpa
+- [ ] apply monitoring
+  - [ ] cilium
+  - [ ] hubble
+  - [ ] grafana
+  - [ ] prometheus
 
 ## Run
 
@@ -33,7 +38,7 @@ master@user:~/vnf-scc-sfc/k8s$ kubectl apply -f ids
 master@user:~/vnf-scc-sfc/k8s$ kubectl apply -f externals/nginx-ingress-baremetal-deploy.yaml
 ```
 
-And, replace [`/k8s/ingress`](/k8s/ingress) `<Please Replace>` with domain.
+And, replace [`/k8s/ingress`](/k8s/ingress.yaml) `<Please Replace>` with domain.
 
 ```bash
 master@user:~/vnf-scc-sfc/k8s$ kubectl apply -f ingress.yaml

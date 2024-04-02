@@ -1,3 +1,4 @@
+# curl -O https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.0/deploy/static/provider/baremetal/deploy.yaml
 apiVersion: v1
 kind: Namespace
 metadata:

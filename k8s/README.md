@@ -2,14 +2,20 @@
 
 - [x] test k8s deployment
 - [ ] organize with helm
+  - check https://github.com/cilium/cilium/blob/main/examples/kubernetes/addons/prometheus/templates/prometheus.yaml, when monitoring 
 - [ ] apply hpa
-- [ ] apply monitoring
-  - [ ] cilium
-  - [ ] hubble
-  - [ ] grafana
-  - [ ] prometheus
+- [x] apply monitoring
+  - [x] grafana
+  - [x] prometheus
+  - [x] prometheus exporter
+    - [x] cilium / hubble
+    - [x] node-exporter
+    - [x] kepler
 
 ## Run
+
+- kubernetes version : v1.29.3
+- helm version : v3.14.3
 
 ### 1. Build Cluster
 
@@ -24,7 +30,14 @@ master@user:~$ kubeadm init
 slave@user:~$ kubeadm join
 ```
 
-### 2. Deploy Firewall and IDS
+### 2 CNI setup (Cilium)
+
+```bash
+master@user:~$ helm repo add cilium https://helm.cilium.io/
+master@user:~/vnf-scc-sfc/k8s$ helm install cilium cilium/cilium --version 1.15.2 -n kube-system -f externals/cilium/values.yaml
+```
+
+### 3. Deploy Firewall and IDS
 
 ```bash
 master@user:~/vnf-scc-sfc/k8s$ kubectl create ns testbed
@@ -32,10 +45,12 @@ master@user:~/vnf-scc-sfc/k8s$ kubectl apply -f firewall
 master@user:~/vnf-scc-sfc/k8s$ kubectl apply -f ids
 ```
 
-### 3. Deploy Ingress-Nginx
+### 4. Deploy Ingress-Nginx Baremetal
+
+If you don't know about that, please read https://kubernetes.github.io/ingress-nginx/deploy/baremetal/.
 
 ```bash
-master@user:~/vnf-scc-sfc/k8s$ kubectl apply -f externals/ingress-nginx-baremetal-deploy.yaml
+master@user:~/vnf-scc-sfc/k8s$ kubectl apply -f externals/ingress-nginx-baremetal.yaml
 ```
 
 And, replace [`/k8s/ingress`](/k8s/ingress.yaml) `<Please Replace>` with domain.
@@ -44,7 +59,7 @@ And, replace [`/k8s/ingress`](/k8s/ingress.yaml) `<Please Replace>` with domain.
 master@user:~/vnf-scc-sfc/k8s$ kubectl apply -f ingress.yaml
 ```
 
-### 4. Check Result
+### 5. Check Result
 
 ```bash
 # check ingress-nginx-controller's ports(<http-port>, and <https-port>)
@@ -63,6 +78,54 @@ master@user:~/vnf-scc-sfc/k8s$ curl http://<host>:<http-port>/ids/openapi.json
 master@user:~/vnf-scc-sfc/k8s$ curl http://<host>:<http-port>/firewall/openapi.json
 ```
 
+## Monitoring
+
+### 1. Grafana
+
+```bash
+master@user:~/vnf-scc-sfc/k8s$ kubectl create ns monitoring
+master@user:~/vnf-scc-sfc/k8s$ kubectl apply -f externals/grafana
+```
+
+### 2. Prometheus
+
+Open [`/k8s/externals/prometheus/prometheus.yaml`](/k8s/externals/prometheus/prometheus.yaml) and fill below part to get node exporter information
+```yaml
+      # node-exporter
+      - job_name: 'node-exporter'
+        static_configs:
+          - targets: # Please Fill this
+            - <master-node-ip>:9100
+            - <slave-node1-ip>:9100
+            - <slave-node2-ip>:9100
+```
+
+```bash
+master@user:~/vnf-scc-sfc/k8s$ kubectl apply -f externals/prometheus
+```
+
+### 3. [Prometheus Exporter 1] Cilium / Hubble
+
+```bash
+master@user:~/vnf-scc-sfc/k8s$ cilium hubble enable --ui
+master@user:~/vnf-scc-sfc/k8s$ cilium status # wait until hubble-ui wake up
+```
+
+### 4. [Prometheus Exporter 2] Node Exporter
+
+```bash
+master@user:~/vnf-scc-sfc/k8s$ helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+master@user:~/vnf-scc-sfc/k8s$ helm install -n node-exporter --create-namespace --version 1.7.0 -f externals/node-exporter/value.yaml
+```
+
+### 5. [Prometheus Exporter 3] Kepler
+
+```bash
+master@user:~/vnf-scc-sfc/k8s$ helm repo add kepler https://sustainable-computing-io.github.io/kepler-helm-chart
+master@user:~/vnf-scc-sfc/k8s$ helm install kepler kepler/kepler -n kepler --create-namespace --version release-0.7.8 -f externals/kepler/value.yaml
+```
+
 ## Externals
 
-- `ingress-nginx`
+- `ingress-nginx`: v1.10.0
+- `kubernetes-dashboard`: v2.7.0

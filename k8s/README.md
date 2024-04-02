@@ -16,6 +16,7 @@
 
 - kubernetes version : v1.29.3
 - helm version : v3.14.3
+- cilium cli : v0.16.3
 
 ### 1. Build Cluster
 
@@ -129,3 +130,6 @@ master@user:~/vnf-scc-sfc/k8s$ helm install kepler kepler/kepler -n kepler --cre
 
 - `ingress-nginx`: v1.10.0
 - `kubernetes-dashboard`: v2.7.0
+- `cilium`: v1.15.2
+- `node-exporter`: 1.7.0
+- `kepler`: release-0.7.8

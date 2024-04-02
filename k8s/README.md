@@ -126,6 +126,20 @@ master@user:~/vnf-scc-sfc/k8s$ helm repo add kepler https://sustainable-computin
 master@user:~/vnf-scc-sfc/k8s$ helm install kepler kepler/kepler -n kepler --create-namespace --version release-0.7.8 -f externals/kepler/value.yaml
 ```
 
+### Monitoring Service url
+
+- Hubble UI  
+  http://\<ingress-host\>:\<nodePort-http-port\>/
+- Grafana  
+  http://\<ingress-host\>:\<nodePort-http-port\>/grafana
+- Prometheus  
+  http://\<ingress-host\>:\<nodePort-http-port\>/prometheus/graph
+- Firewall API  
+  http://\<ingress-host\>:\<nodePort-http-port\>/firewall/docs
+- IDS API  
+  http://\<ingress-host\>:\<nodePort-http-port\>/ids/docs
+
+
 ## Externals
 
 - `ingress-nginx`: v1.10.0

@@ -4,6 +4,8 @@
 - [ ] organize with helm
   - check https://github.com/cilium/cilium/blob/main/examples/kubernetes/addons/prometheus/templates/prometheus.yaml, when monitoring 
 - [ ] apply hpa
+  - [x] CPU / Memory <- base metrics
+  - [ ] Network      <- custom metrics
 - [x] apply monitoring
   - [x] grafana
   - [x] prometheus
@@ -124,6 +126,14 @@ master@user:~/vnf-scc-sfc/k8s$ helm install -n node-exporter --create-namespace 
 ```bash
 master@user:~/vnf-scc-sfc/k8s$ helm repo add kepler https://sustainable-computing-io.github.io/kepler-helm-chart
 master@user:~/vnf-scc-sfc/k8s$ helm install kepler kepler/kepler -n kepler --create-namespace --version release-0.7.8 -f externals/kepler/value.yaml
+```
+
+### 6. [AutoScaler Metric Server] Metrics Server
+
+- now I use metrics-server for horizontal auto scaling
+
+```bash
+master@user:~/vnf-scc-sfc/k8s$ kubectl apply -f externals/metrics-server
 ```
 
 ### Monitoring Service url

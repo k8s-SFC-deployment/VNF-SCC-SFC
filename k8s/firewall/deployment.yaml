@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: firewall-vnf
-  replicas: 15
+  replicas: 1
   template:
     metadata:
       labels:

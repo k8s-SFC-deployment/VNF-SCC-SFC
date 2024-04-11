@@ -1,4 +1,0 @@
-# https://sustainable-computing.io/installation/kepler-helm/
-
-global:
-  namespace: kepler

@@ -3,7 +3,7 @@ import subprocess
 from multiprocessing import cpu_count
 
 from src.config import config
-from src.model import ProcessingLoad
+from src.model import ProcessingLoad, ProcessingLoadV2
 
 def get_cpu_limit():
   with open("/sys/fs/cgroup/cpu/cpu.cfs_quota_us") as fp:
@@ -48,6 +48,21 @@ done 3<<<"$PIDS" 4<<<"$CPU_IN_USES"
   p1.wait()
   p2.wait()
 
+def run_and_wait_process(script):
+  p = subprocess.Popen(script, shell=True, executable="/bin/bash")
+  p.wait()
+
+def stress_v2(processingLoad: ProcessingLoadV2):
+    scripts = []
+    if processingLoad.cpu:
+        scripts.append(f'stress-ng --cpu {processingLoad.cpu.worker} --cpu-ops {processingLoad.cpu.ops} --cpu-load {processingLoad.cpu.limit}')
+    if processingLoad.mem:
+        scripts.append(f'stress-ng --vm {processingLoad.mem.worker} --vm-ops {processingLoad.mem.ops} --vm-bytes {processingLoad.mem.bytes}b')
+    if processingLoad.dio:
+        scripts.append(f'stress-ng --io {processingLoad.dio.worker} --io-ops {processingLoad.dio.ops} --hdd-bytes {processingLoad.dio.bytes}b')
+
+    for script in scripts:
+        run_and_wait_process(script)
 
 if __name__ == "__main__":
   p_load = config.processingLoad

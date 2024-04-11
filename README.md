@@ -16,13 +16,13 @@ And then, VNF consume outer message and resend inner message to another VNF unti
   - [x] CPU
   - [x] Memory
   - [x] Bandwidth
-- [ ] setting up configuration when container start
+- [x] setting up configuration when container start with envs
 
 ## APIS
 
-- (post) `/load` : provide load to VNF with message. VNF consume this message and resend this inner message to another VNF.
+- (post) `/loadv2`: provide load to VNF with message. VNF consume this message and resend its inner message to next VNF. It's load based on operation count.
+- (post) `/load`(deprecated) : provide load to VNF with message. VNF consume this message and resend its inner message to next VNF. It's load based on time.
 - (get) `/config` : get default load config.
-- (post) `/config` : update default load config.
 
 If you want to show detail, go below and past [`/asstes/openapi.json`](/assets/openapi.json).
 
@@ -31,8 +31,31 @@ If you want to show detail, go below and past [`/asstes/openapi.json`](/assets/o
 ## Run
 
 ```bash
-$ docker build -t sfc-simulator -f ./Dockerfile.prod . # Dockerfile.dev only has an additional --reload tag when run.
-$ docker run -it --rm --cpus 1 -p 7000:7000 sfc-simulator
+$ docker build -t vnf-scc-sfc -f ./Dockerfile.prod . # Dockerfile.dev only has an additional --reload tag when run.
+$ docker run -it --rm --cpus 1 -p 7000:7000 vnf-scc-sfc
 ```
 
 If you want to run this with k8s environment, check [`/k8s/`](/k8s/)
+
+### For development
+
+```bash
+$ docker build -t vnf-scc-sfc -f ./Dockerfile.dev . # Dockerfile.dev only has an additional --reload tag when run. (for hot-reload)
+$ docker run -it --rm -v $(pwd):/app --cpus 1 -p 7000:7000 vnf-scc-sfc
+```
+
+### Enviroment Variables
+
+- `CPU_OPS` : default number of cpu operation
+- `CPU_WORKER` : default number of cpu worker
+- `CPU_LIMIT` : default cpu limit (%)
+- `MEM_OPS` : default number of memory operation
+- `MEM_WORKER` : default number of memory worker
+- `MEM_BYTES` : default memory bytes to allocate (bytes) 
+- `DIO_OPS` : default number of disk IO operation
+- `DIO_WORKER` : default number of disk IO worker
+- `DIO_BYTES` : default hdd bytes to allocate (bytes)
+
+### Reference
+
+- docker hub : https://hub.docker.com/repository/docker/euidong/vnf-scc-sfc

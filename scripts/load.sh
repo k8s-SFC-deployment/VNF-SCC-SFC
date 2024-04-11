@@ -13,8 +13,8 @@ while true; do
   -F 'file=@README.md'
 done
 
-# {"mb": 10}
-# {
+# transmittingLoad={"mb": 10}
+# next={
 #   "target_url":"http://firewall-vnf.testbed.svc/firewall/load",
 #   "message": {
 #     "processingLoad": {

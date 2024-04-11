@@ -1,5 +1,11 @@
 # VNF-SCC-SFC
 
+<div align="center">
+
+  ![thumbnail](/assets/images/sfc.png)
+
+</div>
+
 VNF Simulating Container Considering SFC with HTTP
 
 This project implement VNF simulator for stressing environment with `stress-ng`.

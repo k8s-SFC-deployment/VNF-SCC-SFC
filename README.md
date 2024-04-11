@@ -15,6 +15,7 @@ And then, VNF consume outer message and resend inner message to another VNF unti
 - [x] stressing
   - [x] CPU
   - [x] Memory
+  - [x] Disk IO
   - [x] Bandwidth
 - [x] setting up configuration when container start with envs
 
@@ -44,7 +45,7 @@ $ docker build -t vnf-scc-sfc -f ./Dockerfile.dev . # Dockerfile.dev only has an
 $ docker run -it --rm -v $(pwd):/app --cpus 1 -p 7000:7000 vnf-scc-sfc
 ```
 
-### Enviroment Variables
+### Environment Variables
 
 - `CPU_OPS` : default number of cpu operation
 - `CPU_WORKER` : default number of cpu worker

@@ -20,7 +20,7 @@ spec:
         env:
           - name: ROOT_PATH
             value: "/firewall"
-        image: euidong/vnf-scc-sfc:prod-0.0.1
+        image: euidong/vnf-scc-sfc:prod-0.0.2
         imagePullPolicy: Always
         resources:
           limits:

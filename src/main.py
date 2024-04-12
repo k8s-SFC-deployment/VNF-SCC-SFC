@@ -131,3 +131,7 @@ async def loadv2(file: UploadFile = File(...), load_req: LoadPostRequest = Depen
 @app.get("/config")
 def get_config():
     return { "v1": config, "v2": config_v2 }
+
+@app.get("/")
+def root():
+    return "VNF SCC SFC"

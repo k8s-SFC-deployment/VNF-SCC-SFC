@@ -13,17 +13,17 @@ config = Config(
 
 import os
 
-cpu_ops=os.getenv("CPU_OPS", 1000)
-cpu_worker=os.getenv("CPU_WORKER", 1)
-cpu_limit=os.getenv("CPU_LIMIT", 50)
+cpu_ops=int(float(os.getenv("CPU_OPS", 1000)))
+cpu_worker=int(float(os.getenv("CPU_WORKER", 1)))
+cpu_limit=int(float(os.getenv("CPU_LIMIT", 50)))
 
-mem_ops=os.getenv("MEM_OPS", 1000)
-mem_worker=os.getenv("MEM_WORKER", 1)
-mem_bytes=os.getenv("MEM_BYTES", 10000)
+mem_ops=int(float(os.getenv("MEM_OPS", 1000)))
+mem_worker=int(float(os.getenv("MEM_WORKER", 1)))
+mem_bytes=int(float(os.getenv("MEM_BYTES", 10000)))
 
-dio_ops=os.getenv("DIO_OPS", 1000)
-dio_worker=os.getenv("DIO_WORKER", 1)
-dio_bytes=os.getenv("DIO_BYTES", 10000000)
+dio_ops=int(float(os.getenv("DIO_OPS", 1000)))
+dio_worker=int(float(os.getenv("DIO_WORKER", 1)))
+dio_bytes=int(float(os.getenv("DIO_BYTES", 10000000)))
 
 global config_v2
 

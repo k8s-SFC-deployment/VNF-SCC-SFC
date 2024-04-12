@@ -1,0 +1,16 @@
+apiVersion: v2
+name: vnf-scc-sfc
+type: application
+version: 0.0.2
+description: VNF Simulating Container Considering SFC with HTTP
+keywords:
+  - VNF
+  - SFC
+home: https://github.com/k8s-SFC-deployment/VNF-SCC-SFC
+sources:
+  - https://github.com/k8s-SFC-deployment/VNF-SCC-SFC
+maintainers:
+  - name: euidong
+    email: justicedong@postech.ac.kr
+    url: https://euidong.github.io
+appVersion: prod-0.0.2

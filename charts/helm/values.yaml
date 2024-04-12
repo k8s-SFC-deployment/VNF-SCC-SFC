@@ -1,0 +1,60 @@
+image:
+  repository: euidong/vnf-scc-sfc
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+nameOverride: "vnf"
+fullnameOverride: ""
+
+podAnnotations: {}
+podLabels: {}
+
+envs:
+  CPU_OPS: 1000
+  CPU_WORKER: 1
+  CPU_LIMIT: 50
+  MEM_OPS: 1000
+  MEM_WORKER: 1
+  MEM_BYTES: 10000
+  DIO_OPS: 1000
+  DIO_WORKER: 1
+  DIO_BYTES: 10000000
+  # ROOT_PATH: <- If you want to override this, specify here. default is '/{{ "vnf-scc-sfc.fullname" }}'.
+
+
+service:
+  type: LoadBalancer
+  port: 80
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  limits:
+    cpu: "1"
+    memory: "1Gi"
+  requests:
+    cpu: "1"
+    memory: "1Gi"
+
+readinessProbe: 
+  # exclude from service, when request fail
+  httpGet:
+    path: /
+    port: 7000
+
+replicaCount: 1
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 10
+  # targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 20
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

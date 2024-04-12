@@ -2,7 +2,7 @@
 
 <div align="center">
 
-  ![thumbnail](/assets/images/sfc.png)
+  <img src="/assets/images/sfc.png" alt="architecture"/>
 
 </div>
 
@@ -24,6 +24,7 @@ And then, VNF consume outer message and resend inner message to another VNF unti
   - [x] Disk IO
   - [x] Bandwidth
 - [x] setting up configuration when container start with envs
+- [x] Helm Chart Releasing
 
 ## APIS
 

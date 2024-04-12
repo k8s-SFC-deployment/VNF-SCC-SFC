@@ -22,7 +22,6 @@ envs:
   DIO_BYTES: 10000000
   # ROOT_PATH: <- If you want to override this, specify here. default is '/{{ "vnf-scc-sfc.fullname" }}'.
 
-
 service:
   type: LoadBalancer
   port: 80

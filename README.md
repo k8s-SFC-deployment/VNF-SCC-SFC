@@ -36,14 +36,22 @@ If you want to show detail, go below and past [`/asstes/openapi.json`](/assets/o
 
 - https://editor.swagger.io/
 
-## Run
+## Run (Helm)
+
+```bash
+$ helm repo add vnf-scc-sfc https://k8s-sfc-deployment.github.io/VNF-SCC-SFC
+$ helm install firewall-vnf vnf-scc-sfc/vnf-scc-sfc -n testbed
+```
+
+
+## Run (Docker)
+
+### For production
 
 ```bash
 $ docker build -t vnf-scc-sfc -f ./Dockerfile.prod . # Dockerfile.dev only has an additional --reload tag when run.
 $ docker run -it --rm --cpus 1 -p 7000:7000 vnf-scc-sfc
 ```
-
-If you want to run this with k8s environment, check [`/k8s/`](/k8s/)
 
 ### For development
 

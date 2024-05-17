@@ -48,11 +48,12 @@ done 3<<<"$PIDS" 4<<<"$CPU_IN_USES"
   p1.wait()
   p2.wait()
 
-def run_and_wait_process(script):
-  p = subprocess.Popen(script, shell=True, executable="/bin/bash")
-  p.wait()
+import asyncio
 
-def stress_v2(processingLoad: ProcessingLoadV2):
+async def run_async(script):
+  return await asyncio.create_subprocess_shell(script, shell=True, executable="/bin/bash")
+
+async def stress_v2(processingLoad: ProcessingLoadV2):
     scripts = []
     if processingLoad.cpu:
         scripts.append(f'stress-ng --cpu {processingLoad.cpu.worker} --cpu-ops {processingLoad.cpu.ops} --cpu-load {processingLoad.cpu.limit}')
@@ -61,8 +62,7 @@ def stress_v2(processingLoad: ProcessingLoadV2):
     if processingLoad.dio:
         scripts.append(f'stress-ng --io {processingLoad.dio.worker} --io-ops {processingLoad.dio.ops} --hdd-bytes {processingLoad.dio.bytes}b')
 
-    for script in scripts:
-        run_and_wait_process(script)
+    return await asyncio.gather(*[run_async(script) for script in scripts])
 
 if __name__ == "__main__":
   p_load = config.processingLoad

@@ -92,12 +92,10 @@ async def loadv2(file: UploadFile = File(...), load_req: LoadPostRequest = Depen
         json_dict = load_json_one_depth_v2(load_req.next, ["message"])
         next = Next(**json_dict)
     except Exception as e:
-        print(e)
         next = None
     try:
         processingLoad = ProcessingLoadV2(**json.loads(load_req.processingLoad))
     except Exception as e:
-        print(e)
         processingLoad = None
     try:
         transmittingLoad = TransmittingLoad(**json.loads(load_req.transmittingLoad))
@@ -109,7 +107,7 @@ async def loadv2(file: UploadFile = File(...), load_req: LoadPostRequest = Depen
     if processingLoad == None:
         processingLoad = config_v2.processingLoad
     
-    stress_v2(processingLoad)
+    await stress_v2(processingLoad)
     
     if next is None:
         # Nothing
